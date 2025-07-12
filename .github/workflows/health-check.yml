@@ -9,6 +9,17 @@ on:
     - cron: '*/15 * * * *'  # 15分毎にヘルスチェック実行
   workflow_dispatch:
 
+# GitHub Pages用の権限設定
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同時実行の制御
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   health-check:
     runs-on: ubuntu-latest
@@ -144,7 +155,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: health-check
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     
     steps:
       - name: Checkout repository
@@ -180,6 +194,7 @@ jobs:
           
           if [ "${{ needs.deploy.result }}" == "success" ]; then
             echo "✅ Deployment successful" >> $GITHUB_STEP_SUMMARY
+            echo "🌐 **Site URL:** https://xtc1988.github.io/env-signage-dashboard/" >> $GITHUB_STEP_SUMMARY
           elif [ "${{ needs.deploy.result }}" == "skipped" ]; then
             echo "⏭️ Deployment skipped (not main branch)" >> $GITHUB_STEP_SUMMARY
           else
