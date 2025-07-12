@@ -1,4 +1,4 @@
-name: Health Check and Deploy
+name: Health Check and CI
 
 on:
   push:
@@ -8,17 +8,6 @@ on:
   schedule:
     - cron: '*/15 * * * *'  # 15分毎にヘルスチェック実行
   workflow_dispatch:
-
-# GitHub Pages用の権限設定
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# 同時実行の制御
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
   health-check:
@@ -152,54 +141,26 @@ jobs:
             echo "No environment data available for testing"
           fi
 
-  deploy:
+  summary:
     runs-on: ubuntu-latest
-    needs: health-check
-    if: github.ref == 'refs/heads/main'
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload to GitHub Pages
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-  notify:
-    runs-on: ubuntu-latest
-    needs: [health-check, deploy]
+    needs: [health-check]
     if: always()
     
     steps:
-      - name: Health Check Summary
+      - name: CI Summary
         run: |
-          echo "## Health Check Results" >> $GITHUB_STEP_SUMMARY
+          echo "## CI Results" >> $GITHUB_STEP_SUMMARY
           
           if [ "${{ needs.health-check.result }}" == "success" ]; then
             echo "✅ Health checks passed" >> $GITHUB_STEP_SUMMARY
+            echo "🚀 Ready for deployment via GitHub Pages" >> $GITHUB_STEP_SUMMARY
+            echo "🌐 **Site URL:** https://xtc1988.github.io/env-signage-dashboard/" >> $GITHUB_STEP_SUMMARY
           else
             echo "❌ Health checks failed" >> $GITHUB_STEP_SUMMARY
-          fi
-          
-          if [ "${{ needs.deploy.result }}" == "success" ]; then
-            echo "✅ Deployment successful" >> $GITHUB_STEP_SUMMARY
-            echo "🌐 **Site URL:** https://xtc1988.github.io/env-signage-dashboard/" >> $GITHUB_STEP_SUMMARY
-          elif [ "${{ needs.deploy.result }}" == "skipped" ]; then
-            echo "⏭️ Deployment skipped (not main branch)" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "❌ Deployment failed" >> $GITHUB_STEP_SUMMARY
+            echo "⚠️ Fix issues before deployment" >> $GITHUB_STEP_SUMMARY
           fi
           
           echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
           echo "**Timestamp:** $(date)" >> $GITHUB_STEP_SUMMARY
