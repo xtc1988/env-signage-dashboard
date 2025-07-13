@@ -9,13 +9,13 @@
 </head>
 <body>
     <div class="header">
-        <h1>🖥️ 環境監視ダッシュボード</h1>
+        <h1>Environment Dashboard</h1>
         <div class="header-info">
-            <div class="last-updated">最終更新: <span id="lastUpdated">2025-07-12 14:30:00</span></div>
+            <div class="last-updated">Last updated: <span id="lastUpdated">2025-07-12 14:30:00</span></div>
             <div class="status-summary">
-                <span style="color: #00ff88;">正常: <span id="healthyCount">5</span></span> | 
-                <span style="color: #ffa500;">警告: <span id="warningCount">2</span></span> | 
-                <span style="color: #ff4757;">エラー: <span id="errorCount">1</span></span>
+                <span style="color: #27ae60;">●</span> <span id="healthyCount">5</span> Running
+                <span style="color: #f39c12;">●</span> <span id="warningCount">2</span> Warning  
+                <span style="color: #e74c3c;">●</span> <span id="errorCount">1</span> Error
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
 
     <div class="auto-refresh">
         <span class="refresh-indicator"></span>
-        自動更新中 (60秒間隔)
+        Auto-refresh active
     </div>
 
     <script src="js/config.js"></script>

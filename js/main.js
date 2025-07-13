@@ -201,12 +201,12 @@ class EnvironmentDashboard {
             </div>
             <div class="card-summary">
                 <div class="service-count">
-                    ${healthyServices}/${totalServices} サービス
+                    ${healthyServices}/${totalServices} services
                 </div>
                 <div class="response-time">${this.formatResponseTime(responseTime)}</div>
             </div>
             <div class="card-footer">
-                <div class="last-check">${this.formatTime(health?.timestamp)}</div>
+                <div class="last-check">Last check: ${this.formatTime(health?.timestamp)}</div>
                 <div class="expand-icon">▼</div>
             </div>
             <div class="card-details">
@@ -227,40 +227,40 @@ class EnvironmentDashboard {
             
             ${env.credentials?.username ? `
             <div class="detail-section">
-                <div class="detail-label">ユーザー名</div>
+                <div class="detail-label">Username</div>
                 <div class="detail-value">
                     ${this.escapeHtml(env.credentials.username)}
-                    <button class="copy-btn" onclick="event.stopPropagation(); dashboard.copyToClipboard('${this.escapeHtml(env.credentials.username)}')">コピー</button>
+                    <button class="copy-btn" onclick="event.stopPropagation(); dashboard.copyToClipboard('${this.escapeHtml(env.credentials.username)}')">Copy</button>
                 </div>
             </div>` : ''}
 
             ${env.credentials?.password ? `
             <div class="detail-section">
-                <div class="detail-label">パスワード</div>
+                <div class="detail-label">Password</div>
                 <div class="detail-value">
                     <span id="password-${env.id}">••••••••••</span>
                     <div>
-                        <button class="copy-btn" onclick="event.stopPropagation(); dashboard.togglePassword('${env.id}', '${this.escapeHtml(env.credentials.password)}')">表示</button>
-                        <button class="copy-btn" onclick="event.stopPropagation(); dashboard.copyToClipboard('${this.escapeHtml(env.credentials.password)}')">コピー</button>
+                        <button class="copy-btn" onclick="event.stopPropagation(); dashboard.togglePassword('${env.id}', '${this.escapeHtml(env.credentials.password)}')">Show</button>
+                        <button class="copy-btn" onclick="event.stopPropagation(); dashboard.copyToClipboard('${this.escapeHtml(env.credentials.password)}')">Copy</button>
                     </div>
                 </div>
             </div>` : ''}
 
             ${env.description ? `
             <div class="detail-section">
-                <div class="detail-label">説明</div>
+                <div class="detail-label">Description</div>
                 <div class="detail-value">${this.escapeHtml(env.description)}</div>
             </div>` : ''}
 
             ${env.access_notes ? `
             <div class="detail-section">
-                <div class="detail-label">注意事項</div>
+                <div class="detail-label">Access Notes</div>
                 <div class="detail-value">${this.escapeHtml(env.access_notes)}</div>
             </div>` : ''}
 
             ${env.services && env.services.length > 0 ? `
             <div class="detail-section">
-                <div class="detail-label">サービス状況</div>
+                <div class="detail-label">Services Status</div>
                 <div class="services-list">
                     ${env.services.map(service => `
                         <div class="service-item ${service.status || 'unknown'}">
@@ -302,10 +302,10 @@ class EnvironmentDashboard {
     async copyToClipboard(text) {
         try {
             await navigator.clipboard.writeText(text);
-            this.showToast('クリップボードにコピーしました');
+            this.showToast('Copied to clipboard');
         } catch (error) {
             Logger.error('Clipboard copy failed:', error);
-            this.showToast('コピーに失敗しました', 'error');
+            this.showToast('Copy failed', 'error');
         }
     }
 
@@ -316,10 +316,10 @@ class EnvironmentDashboard {
         
         if (isHidden) {
             passwordElement.textContent = password;
-            event.target.textContent = '隠す';
+            event.target.textContent = 'Hide';
         } else {
             passwordElement.textContent = '••••••••••';
-            event.target.textContent = '表示';
+            event.target.textContent = 'Show';
         }
     }
 
@@ -386,7 +386,7 @@ class EnvironmentDashboard {
     async manualUpdate() {
         api.clearCache();
         await this.updateData();
-        this.showToast('手動更新しました');
+        this.showToast('Manually refreshed');
     }
 
     // トースト通知
@@ -394,14 +394,16 @@ class EnvironmentDashboard {
         const toast = document.createElement('div');
         toast.style.cssText = `
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: ${type === 'error' ? '#ff4757' : '#00ff88'};
-            color: ${type === 'error' ? 'white' : 'black'};
+            top: 30px;
+            right: 30px;
+            background: ${type === 'error' ? '#e74c3c' : '#27ae60'};
+            color: white;
             padding: 12px 20px;
             border-radius: 8px;
-            font-weight: 600;
+            font-weight: 500;
             z-index: 2000;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 20px rgba(39, 174, 96, 0.3);
             animation: slideIn 0.3s ease;
         `;
         toast.textContent = message;
@@ -409,7 +411,7 @@ class EnvironmentDashboard {
 
         setTimeout(() => {
             toast.remove();
-        }, 3000);
+        }, 2000);
     }
 
     // エラー表示
