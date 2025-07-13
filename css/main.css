@@ -60,13 +60,17 @@ body {
 .environment-card {
     background: #ffffff;
     border-radius: 16px;
-    padding: 24px;
+    padding: 16px;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    min-height: 130px;
+    min-height: 90px;
+    max-height: 90px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     border: 1px solid #e1e8ed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .environment-card:hover {
@@ -77,6 +81,8 @@ body {
 .environment-card.expanded {
     box-shadow: 0 8px 30px rgba(52, 152, 219, 0.15);
     border-color: #3498db;
+    max-height: none;
+    min-height: auto;
 }
 
 /* 状態別の境界線色 */
@@ -101,14 +107,19 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
+    flex-shrink: 0;
 }
 
 .env-name {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: #2c3e50;
     letter-spacing: -0.3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 20px);
 }
 
 /* 状態インジケーター */
@@ -147,17 +158,18 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 6px;
+    flex-shrink: 0;
 }
 
 .service-count {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: #7f8c8d;
     font-weight: 500;
 }
 
 .response-time {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     font-weight: 300;
     color: #2c3e50;
 }
@@ -167,12 +179,14 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: #95a5a6;
+    margin-top: auto;
+    flex-shrink: 0;
 }
 
 .expand-icon {
-    font-size: 1rem;
+    font-size: 0.9rem;
     transition: transform 0.3s ease;
     color: #3498db;
 }
@@ -193,8 +207,8 @@ body {
 
 .environment-card.expanded .card-details {
     max-height: 600px;
-    padding-top: 20px;
-    margin-top: 20px;
+    padding-top: 16px;
+    margin-top: 16px;
     border-top: 1px solid #e1e8ed;
     opacity: 1;
 }
@@ -209,24 +223,24 @@ body {
 
 /* 詳細セクション */
 .detail-section {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .detail-label {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: #7f8c8d;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-weight: 600;
 }
 
 .detail-value {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: #2c3e50;
     background: #f8f9fa;
-    padding: 12px 16px;
-    border-radius: 8px;
+    padding: 8px 12px;
+    border-radius: 6px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -253,19 +267,19 @@ body {
 
 /* サービスリスト */
 .services-list {
-    margin-top: 12px;
+    margin-top: 8px;
 }
 
 .service-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 16px;
-    margin-bottom: 8px;
+    padding: 8px 12px;
+    margin-bottom: 6px;
     background: #f8f9fa;
-    border-radius: 8px;
+    border-radius: 6px;
     border-left: 3px solid;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     transition: all 0.2s ease;
 }
 
