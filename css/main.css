@@ -156,16 +156,10 @@ body {
 /* カードサマリー */
 .card-summary {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     margin-bottom: 6px;
     flex-shrink: 0;
-}
-
-.service-count {
-    font-size: 0.8rem;
-    color: #7f8c8d;
-    font-weight: 500;
 }
 
 .response-time {

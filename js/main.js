@@ -190,9 +190,7 @@ class EnvironmentDashboard {
             card.classList.add('expanded');
         }
 
-        // サービス統計
-        const healthyServices = env.services?.filter(s => s.status === 'healthy').length || 0;
-        const totalServices = env.services?.length || 0;
+        // サービス統計（詳細表示用のみ保持）
 
         card.innerHTML = `
             <div class="card-header">
@@ -200,9 +198,6 @@ class EnvironmentDashboard {
                 <div class="status-indicator ${status}"></div>
             </div>
             <div class="card-summary">
-                <div class="service-count">
-                    ${healthyServices}/${totalServices} services
-                </div>
                 <div class="response-time">${this.formatResponseTime(responseTime)}</div>
             </div>
             <div class="card-footer">
