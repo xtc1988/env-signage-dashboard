@@ -1,120 +1,109 @@
-/* レスポンシブ対応 */
-
-/* タブレット (1200px以下) */
-@media (max-width: 1200px) {
-    .dashboard {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    }
-}
-
-/* 小画面 (800px以下) */
-@media (max-width: 800px) {
-    .dashboard {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 16px;
-        padding: 20px;
-    }
-    
+/* レスポンシブ */
+@media (max-width: 768px) {
     .header {
-        padding: 20px;
-    }
-    
-    .header h1 {
-        font-size: 1.8rem;
-    }
-}
-
-/* スマートフォン (600px以下) */
-@media (max-width: 600px) {
-    .dashboard {
-        grid-template-columns: 1fr;
-        gap: 16px;
-        padding: 16px;
-    }
-    
-    .header {
-        padding: 16px 20px;
         flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-    
-    .header h1 {
-        font-size: 1.6rem;
-    }
-    
-    .header-info {
-        text-align: left;
-    }
-    
-    .environment-card {
-        padding: 20px;
-        min-height: 120px;
-    }
-    
-    .env-name {
-        font-size: 1.2rem;
-    }
-    
-    .response-time {
-        font-size: 1.2rem;
-    }
-    
-    .auto-refresh {
-        bottom: 20px;
-        right: 20px;
-        padding: 10px 14px;
-        font-size: 0.75rem;
-    }
-}
-
-/* 極小画面 (400px以下) */
-@media (max-width: 400px) {
-    .dashboard {
-        padding: 12px;
-        gap: 12px;
-    }
-    
-    .header {
-        padding: 16px;
-    }
-    
-    .header h1 {
-        font-size: 1.4rem;
-    }
-    
-    .environment-card {
-        padding: 16px;
-        min-height: 110px;
-    }
-    
-    .env-name {
-        font-size: 1.1rem;
-    }
-    
-    .detail-value {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-    
-    .copy-btn {
-        width: 100%;
+        gap: 1rem;
         text-align: center;
+    }
+    
+    .environments-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .env-info {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .env-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .env-actions {
+        grid-template-columns: 1fr;
+    }
+
+    /* 検索セクションのレスポンシブ対応 */
+    .search-container {
+        gap: 1.5rem;
+    }
+
+    .search-box {
+        max-width: 100%;
+    }
+
+    .filters {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .search-results {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+/* タブレット対応 */
+@media (max-width: 1024px) {
+    .container {
+        padding: 1.5rem;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .environments-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1rem;
+    }
+}
+
+/* 極小画面対応 */
+@media (max-width: 480px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .header {
+        margin-bottom: 2rem;
+    }
+
+    .header h1 {
+        font-size: 1.75rem;
+    }
+
+    .env-header {
+        padding: 1rem;
+    }
+
+    .env-status-badge {
+        position: static;
+        margin-bottom: 1rem;
+        justify-content: center;
+    }
+
+    .env-body {
+        padding: 1rem;
+    }
+
+    .env-title {
+        font-size: 1.125rem;
     }
 }
 
 /* 高コントラストモード対応 */
 @media (prefers-contrast: high) {
-    .environment-card {
+    .env-card {
         border: 2px solid #2c3e50;
     }
     
-    .status-indicator {
+    .status-dot {
         border: 2px solid currentColor;
     }
     
-    .detail-value {
+    .service-item {
         background: #ffffff;
         border: 2px solid #2c3e50;
     }
@@ -128,11 +117,7 @@
         transition-duration: 0.01ms !important;
     }
     
-    .status-indicator {
-        animation: none;
-    }
-    
-    .refresh-indicator {
+    .update-indicator {
         animation: none;
     }
 }
@@ -144,11 +129,11 @@
         color: black;
     }
     
-    .auto-refresh {
+    .update-indicator {
         display: none;
     }
     
-    .environment-card {
+    .env-card {
         background: white;
         border: 1px solid #ccc;
         break-inside: avoid;
@@ -156,23 +141,19 @@
         box-shadow: none;
     }
     
-    .status-indicator {
+    .status-dot {
         border: 2px solid;
     }
     
-    .status-indicator.healthy {
-        border-color: #27ae60;
+    .status-dot.operational {
+        border-color: #10b981;
     }
     
-    .status-indicator.warning {
-        border-color: #f39c12;
+    .status-dot.warning {
+        border-color: #f59e0b;
     }
     
-    .status-indicator.error {
-        border-color: #e74c3c;
-    }
-    
-    .status-indicator.maintenance {
-        border-color: #95a5a6;
+    .status-dot.error {
+        border-color: #ef4444;
     }
 }

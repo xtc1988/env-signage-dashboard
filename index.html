@@ -3,35 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>環境監視ダッシュボード</title>
+    <title>Environment Status Dashboard</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
-    <div class="header">
-        <h1>Environment Dashboard</h1>
-        <div class="header-info">
-            <div class="last-updated">Last updated: <span id="lastUpdated">2025-07-12 14:30:00</span></div>
-            <div class="status-summary">
-                <span style="color: #27ae60;">●</span> <span id="healthyCount">5</span> Running
-                <span style="color: #f39c12;">●</span> <span id="warningCount">2</span> Warning  
-                <span style="color: #e74c3c;">●</span> <span id="errorCount">1</span> Error
+    <div class="container">
+        <!-- ヘッダー -->
+        <div class="header">
+            <h1>環境ステータス</h1>
+            <div class="last-update">
+                <div class="update-indicator"></div>
+                <span>最終更新: <span id="update-time">-</span></span>
             </div>
         </div>
-    </div>
 
-    <div class="dashboard" id="dashboard">
-        <!-- 環境カードは JavaScript で動的生成 -->
-    </div>
+        <!-- 検索・フィルターセクション -->
+        <div class="search-section">
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="環境名、バージョン、チャンネル名で検索...">
+                    <button id="clear-search" class="clear-btn">✕</button>
+                </div>
+                
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="version-filter">バージョン:</label>
+                        <select id="version-filter">
+                            <option value="">すべて</option>
+                            <option value="v8">v8系</option>
+                            <option value="v7">v7系</option>
+                            <option value="v6">v6系</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="database-filter">データベース:</label>
+                        <select id="database-filter">
+                            <option value="">すべて</option>
+                            <option value="Oracle">Oracle</option>
+                            <option value="Aurora">Aurora</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="multicompany-filter">マルチカンパニー:</label>
+                        <select id="multicompany-filter">
+                            <option value="">すべて</option>
+                            <option value="true">ON</option>
+                            <option value="false">OFF</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="multiperson-filter">マルチパーソン:</label>
+                        <select id="multiperson-filter">
+                            <option value="">すべて</option>
+                            <option value="true">ON</option>
+                            <option value="false">OFF</option>
+                        </select>
+                    </div>
+                    
+                    <button id="reset-filters" class="reset-btn">フィルターリセット</button>
+                </div>
+            </div>
+            
+            <div class="search-results">
+                <span id="results-count">0件の環境が見つかりました</span>
+            </div>
+        </div>
 
-    <div class="auto-refresh">
-        <span class="refresh-indicator"></span>
-        Auto-refresh active
+        <!-- 環境グリッド -->
+        <div class="environments-grid" id="environments-grid">
+            <!-- 環境カードは JavaScript で動的生成 -->
+        </div>
     </div>
 
     <script src="js/config.js"></script>
     <script src="js/api.js"></script>
-    <script src="js/wiki-parser.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
